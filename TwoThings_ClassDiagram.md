@@ -4,7 +4,7 @@ This diagram shows the structure and relationships of objects in the TwoThings.j
 
 ```mermaid
 classDiagram
-    class TwoThings~T, C~ {
+    class TwoThings {
         -T item1
         -C item2
         +TwoThings(T itemA, C itemB)
@@ -13,7 +13,7 @@ classDiagram
         +getItem2() C
         +setItem1(T itemA) void
         +setItem2(C itemB) void
-        +main(String[] args) void$
+        +main(String[] args)$ void
     }
     
     class Name {
@@ -35,36 +35,34 @@ classDiagram
         <<interface>>
     }
     
-    class Comparable~Name~ {
+    class ComparableName {
         <<interface>>
+        +compareTo(Name other) int
     }
     
-    class Comparable~Fraction~ {
+    class ComparableFraction {
         <<interface>>
+        +compareTo(Fraction other) int
     }
     
-    TwoThings --|> Name : uses as T
-    TwoThings --|> Fraction : uses as C
-    TwoThings --|> String : uses as T
-    TwoThings --|> Integer : uses as C
+    TwoThings ..> Name : uses
+    TwoThings ..> Fraction : uses
+    TwoThings ..> String : uses
+    TwoThings ..> Integer : uses
     
-    Name --|> Comparable~Name~ : implements
-    Fraction --|> FractionInterface : implements
-    Fraction --|> Comparable~Fraction~ : implements
-    
-    note for TwoThings "Generic class that can store\ntwo objects of any types T and C"
-    note for Name "Stores first and last name"
-    note for Fraction "Represents a mathematical fraction\nwith numerator and denominator"
+    Name ..|> ComparableName : implements
+    Fraction ..|> FractionInterface : implements
+    Fraction ..|> ComparableFraction : implements
 ```
 
 ## Object Instances in main()
 
 ```mermaid
-graph TD
-    A[TwoThings&lt;String, Integer&gt; object1] --> B["item1: 'Nami' (String)"]
-    A --> C["item2: 25 → 24 (Integer)"]
+flowchart TD
+    A["TwoThings&lt;String, Integer&gt;<br/>object1"] --> B["item1: 'Nami'<br/>(String)"]
+    A --> C["item2: 25 → 24<br/>(Integer)"]
     
-    D[TwoThings&lt;Name, Fraction&gt; object2] --> E["item1: Name object"]
+    D["TwoThings&lt;Name, Fraction&gt;<br/>object2"] --> E["item1: Name object"]
     D --> F["item2: Fraction(5,2)"]
     
     E --> G["first: 'Nalu' → 'Sally'"]

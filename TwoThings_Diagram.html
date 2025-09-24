@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TwoThings Class Diagram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+    <h1>TwoThings Class Diagram</h1>
+    
+    <h2>Class Structure</h2>
+    <div class="mermaid">
+classDiagram
+    class TwoThings {
+        -T item1
+        -C item2
+        +TwoThings(T itemA, C itemB)
+        +toString() String
+        +getItem1() T
+        +getItem2() C
+        +setItem1(T itemA)
+        +setItem2(C itemB)
+    }
+    
+    class Name {
+        -String first
+        -String last
+        +Name(String firstName, String lastName)
+        +toString() String
+        +setFirstName(String firstName)
+    }
+    
+    class Fraction {
+        -Integer numerator
+        -Integer denominator
+        +Fraction(Integer num, Integer den)
+        +toString() String
+    }
+    
+    TwoThings --> Name : uses
+    TwoThings --> Fraction : uses
+    </div>
+    
+    <h2>Object Instances in main()</h2>
+    <div class="mermaid">
+graph TD
+    A["object1: TwoThings&lt;String,Integer&gt;"] --> B["item1: 'Nami'"]
+    A --> C["item2: 25 → 24"]
+    
+    D["object2: TwoThings&lt;Name,Fraction&gt;"] --> E["item1: Name"]
+    D --> F["item2: Fraction(5,2)"]
+    
+    E --> G["first: 'Nalu' → 'Sally'"]
+    E --> H["last: 'Suzuki'"]
+    
+    F --> I["numerator: 5"]
+    F --> J["denominator: 2"]
+    </div>
+
+    <h2>Program Flow</h2>
+    <div class="mermaid">
+sequenceDiagram
+    participant M as main()
+    participant O1 as object1
+    participant O2 as object2
+    participant N as Name
+    participant F as Fraction
+    
+    M->>O1: create TwoThings<String,Integer>("Nami", 25)
+    M->>O1: getItem2() returns 25
+    M->>O1: setItem2(24)
+    
+    M->>N: create Name("Nalu", "Suzuki")
+    M->>F: create Fraction(5, 2)
+    M->>O2: create TwoThings<Name,Fraction>(name, fraction)
+    M->>O2: getItem1() returns Name
+    M->>N: setFirstName("Sally")
+    M->>O2: setItem1(modified name)
+    </div>
+
+    <script>
+        mermaid.initialize({startOnLoad:true});
+    </script>
+    
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1, h2 { color: #333; }
+        .mermaid { margin: 20px 0; padding: 20px; border: 1px solid #ddd; }
+    </style>
+</body>
+</html>
